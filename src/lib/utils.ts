@@ -1,4 +1,4 @@
-import { access, readdir, readFile, writeFile } from 'fs/promises';
+import { access, readdir, readFile, stat, writeFile } from 'fs/promises';
 import type { PurityTestData } from './types';
 
 export async function getPurityTest(testId: string): Promise<PurityTestData> {
@@ -17,6 +17,17 @@ export async function getAllPurityTests(): Promise<Record<string, PurityTestData
         })
     );
     return Object.fromEntries(entries);
+}
+
+export async function getPurityTestEntries(): Promise<{ testId: string; lastModified: Date }[]> {
+    const files = await readdir('purity-tests');
+    const jsonFiles = files.filter(file => file.endsWith('.json'));
+    return Promise.all(
+        jsonFiles.map(async file => {
+            const { mtime } = await stat(`purity-tests/${file}`);
+            return { testId: file.replace(/\.json$/, ''), lastModified: mtime };
+        })
+    );
 }
 
 export async function countPurityTests(): Promise<number> {

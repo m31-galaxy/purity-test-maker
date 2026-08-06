@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /*/results
+
+Sitemap: https://puritytestmaker.com/sitemap.xml
