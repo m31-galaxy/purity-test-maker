@@ -8,6 +8,10 @@
     const score = data.answers.length - data.answers.filter(Boolean).length;
 </script>
 
+<svelte:head>
+    <meta name="robots" content="noindex" />
+</svelte:head>
+
 <Page
     pageTitle="Your {name} Purity Score"
     pageDescription={description}

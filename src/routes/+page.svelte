@@ -1,10 +1,32 @@
 <script>
     import Button from '$lib/components/Button.svelte';
+    import JsonLd from '$lib/components/JsonLd.svelte';
     import Page from '$lib/components/Page.svelte';
     import PurityTestHeader from '$lib/components/PurityTestHeader.svelte';
+    import { page } from '$app/state';
 
     let { data } = $props();
+
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'WebSite',
+                name: 'Purity Test Maker',
+                alternateName: 'The Official Purity Test Maker',
+                url: `${page.url.origin}/`,
+            },
+            {
+                '@type': 'Organization',
+                name: 'Purity Test Maker',
+                url: `${page.url.origin}/`,
+                logo: `${page.url.origin}/android-chrome-512x512.png`,
+            },
+        ],
+    };
 </script>
+
+<JsonLd data={jsonLd} />
 
 <Page
     noHeader
